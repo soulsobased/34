@@ -1,2 +1,22 @@
-discord.py
-requests
+import discord
+import requests
+
+# Create a Discord client
+client = discord.Client()
+
+# Set up a command that sends a GET request to a specified URL
+@client.command()
+async def get(ctx, url):
+    # Send a GET request to the specified URL
+    response = requests.get(url)
+
+    # Check if the request was successful
+    if response.status_code == 200:
+        # Send the response content to the channel
+        await ctx.send(response.content)
+    else:
+        # Send an error message to the channel
+        await ctx.send(f"Error {response.status_code}: {response.reason}")
+
+# Run the Discord client
+client.run("YOUR_DISCORD_BOT_TOKEN")
